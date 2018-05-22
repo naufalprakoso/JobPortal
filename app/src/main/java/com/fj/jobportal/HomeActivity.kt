@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.app_bar_home.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -23,6 +24,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
+
+        var mainFragment = MainFragment()
+        supportFragmentManager.inTransaction {
+            replace(R.id.container_frame, mainFragment)
+        }
 
         fab.setOnClickListener { view ->
             var createJobFragment = CreateJobFragment()
@@ -85,23 +91,17 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
-            }
-            R.id.nav_gallery -> {
+            R.id.nav_home -> {
 
             }
-            R.id.nav_slideshow -> {
+            R.id.nav_help -> {
 
             }
-            R.id.nav_manage -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
+            R.id.nav_logout -> {
+                mAuth.signOut()
+                startActivity<LoginActivity>()
+                finish()
+                toast("Good bye~")
             }
         }
 

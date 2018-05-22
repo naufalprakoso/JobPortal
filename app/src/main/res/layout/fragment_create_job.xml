@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dimen_16dp"
     tools:context="com.fj.jobportal.CreateJobFragment">
 
     <LinearLayout
@@ -87,6 +86,15 @@
             android:padding="@dimen/dimen_16dp"
             android:id="@+id/edt_min_experience"
             android:hint="Minimun experience..."/>
+
+        <Button
+            android:id="@+id/btn_create"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:textColor="@android:color/white"
+            android:text="Create Job Vacancy"/>
 
     </LinearLayout>
 
