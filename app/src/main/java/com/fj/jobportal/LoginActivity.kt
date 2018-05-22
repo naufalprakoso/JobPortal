@@ -2,6 +2,7 @@ package com.fj.jobportal
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
@@ -11,9 +12,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mAuth : FirebaseAuth
 
-    private lateinit var email : String
-    private lateinit var password : String
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -22,15 +20,15 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         btn_register.setOnClickListener(this)
         btn_login.setOnClickListener(this)
-
-        email = edt_email.text.toString()
-        password = edt_password.text.toString()
     }
 
     override fun onClick(v: View?) {
         when(v){
             btn_register -> {
-                toast("Button Register Clicked")
+
+                var email = edt_email.text.toString()
+                var password = edt_password.text.toString()
+                toast("Button Register Clicked" + email + password)
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) { task ->
@@ -39,13 +37,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 //                                updateUI(user)
                                 toast("Success")
                             } else {
-                                toast("Failed")
+                                toast("User registered")
                             }
                         }
             }
 
             btn_login -> {
                 toast("Button Login Clicked")
+
+                var email = edt_email.text.toString()
+                var password = edt_password.text.toString()
 
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) { task ->
