@@ -1,8 +1,9 @@
 package com.fj.jobportal
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -24,8 +25,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            var createJobFragment = CreateJobFragment()
+            supportFragmentManager.inTransaction {
+                replace(R.id.container_frame, createJobFragment)
+            }
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -39,6 +42,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        mAuth.signOut()
         var currentUser = mAuth.currentUser
         isLogin(currentUser)
+    }
+
+    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
+        val fragmentTransaction = beginTransaction()
+        fragmentTransaction.func()
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 
     private fun isLogin(firebaseUser: FirebaseUser?){
