@@ -2,12 +2,17 @@ package com.fj.jobportal
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_create_job.*
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.fragment_create_job.view.*
+import org.jetbrains.anko.toast
 
 class CreateJobFragment : Fragment(), View.OnClickListener {
 
@@ -26,14 +31,42 @@ class CreateJobFragment : Fragment(), View.OnClickListener {
                 var desc = edt_jobdesc.text.toString()
                 var experience = edt_min_experience.text.toString()
 
-                myRef.child("company").child(email).child("vacancy")
+                myRef.child("company").child(email).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                        .child("companyName").setValue(name)
+                myRef.child("company").child(email).child("vacancy").child("jobPosition").setValue(position)
+                myRef.child("company").child(email).child("vacancy").child("salary").setValue(salary)
+                myRef.child("company").child(email).child("vacancy").child("jobType").setValue(type)
+                myRef.child("company").child(email).child("vacancy").child("jobDesc").setValue(desc)
+                myRef.child("company").child(email).child("vacancy").child("jobExperience").setValue(experience)
+
+                context?.toast("Insert succesful")
+
+                var mainFragment = MainFragment()
+                activity?.supportFragmentManager?.inTransaction {
+                    replace(R.id.container_frame, mainFragment)
+                }
             }
         }
+    }
+
+    inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
+        val fragmentTransaction = beginTransaction()
+        fragmentTransaction.func()
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_create_job, container, false)
+
+        val adapterType = ArrayAdapter.createFromResource(
+                context,
+                R.array.type_array,
+                android.R.layout.simple_spinner_item)
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        view.list_job_type.setAdapter(adapterType)
+
         return view
     }
 }
