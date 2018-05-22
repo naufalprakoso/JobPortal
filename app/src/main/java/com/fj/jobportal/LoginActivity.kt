@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -30,7 +31,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
-//                                val user = mAuth.currentUser
+                                startActivity<HomeActivity>()
+                                finish()
                                 toast("Success")
                             } else {
                                 toast("User registered")
@@ -45,7 +47,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
-//                                val user = mAuth.currentUser
+                                startActivity<HomeActivity>()
+                                finish()
                                 toast("Success")
                             } else {
                                 toast("Failed")
