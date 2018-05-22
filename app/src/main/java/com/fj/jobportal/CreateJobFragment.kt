@@ -17,13 +17,13 @@ import org.jetbrains.anko.toast
 class CreateJobFragment : Fragment(), View.OnClickListener {
 
     var database = FirebaseDatabase.getInstance()
-    var myRef = database.getReference("message")
+    var myRef = database.getReference("company")
 
     override fun onClick(v: View?) {
         when(v){
             btn_create -> {
                 var user = FirebaseAuth.getInstance().currentUser
-                var email = user?.email
+                var uid = user?.uid
                 var name = edt_name.text.toString()
                 var position = edt_position.text.toString()
                 var salary = edt_salary.text.toString()
@@ -31,13 +31,18 @@ class CreateJobFragment : Fragment(), View.OnClickListener {
                 var desc = edt_jobdesc.text.toString()
                 var experience = edt_min_experience.text.toString()
 
-                myRef.child("company").child(email).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
                         .child("companyName").setValue(name)
-                myRef.child("company").child(email).child("vacancy").child("jobPosition").setValue(position)
-                myRef.child("company").child(email).child("vacancy").child("salary").setValue(salary)
-                myRef.child("company").child(email).child("vacancy").child("jobType").setValue(type)
-                myRef.child("company").child(email).child("vacancy").child("jobDesc").setValue(desc)
-                myRef.child("company").child(email).child("vacancy").child("jobExperience").setValue(experience)
+                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                        .child("jobPosition").setValue(position)
+                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                        .child("salary").setValue(salary)
+                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                        .child("jobType").setValue(type)
+                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                        .child("jobDesc").setValue(desc)
+                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                        .child("jobExperience").setValue(experience)
 
                 context?.toast("Insert succesful")
 
@@ -66,6 +71,8 @@ class CreateJobFragment : Fragment(), View.OnClickListener {
                 android.R.layout.simple_spinner_item)
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         view.list_job_type.setAdapter(adapterType)
+
+        view.btn_create.setOnClickListener(this)
 
         return view
     }

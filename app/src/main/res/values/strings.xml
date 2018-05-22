@@ -11,8 +11,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="type_array">
-        <item>Part-time</item>
         <item>Fulltime</item>
+        <item>Part-time</item>
         <item>Internship</item>
     </string-array>
 </resources>
