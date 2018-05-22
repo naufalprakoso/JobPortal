@@ -58,4 +58,17 @@
         android:background="@color/colorAccent"
         android:textColor="@android:color/white"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="OR"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:id="@+id/btn_google"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

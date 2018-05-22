@@ -20,6 +20,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         btn_register.setOnClickListener(this)
         btn_login.setOnClickListener(this)
+        btn_google.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -59,6 +60,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 //                                updateUI(null)
                             }
                         }
+            }
+
+            btn_google -> {
+                toast("Login with google account")
+
+
             }
         }
     }
