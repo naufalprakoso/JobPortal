@@ -2,7 +2,6 @@ package com.fj.jobportal
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
@@ -20,22 +19,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         btn_register.setOnClickListener(this)
         btn_login.setOnClickListener(this)
-        btn_google.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when(v){
             btn_register -> {
-
                 var email = edt_email.text.toString()
                 var password = edt_password.text.toString()
-                toast("Button Register Clicked" + email + password)
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
 //                                val user = mAuth.currentUser
-//                                updateUI(user)
                                 toast("Success")
                             } else {
                                 toast("User registered")
@@ -44,8 +39,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             btn_login -> {
-                toast("Button Login Clicked")
-
                 var email = edt_email.text.toString()
                 var password = edt_password.text.toString()
 
@@ -54,20 +47,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                             if (task.isSuccessful) {
 //                                val user = mAuth.currentUser
                                 toast("Success")
-//                                updateUI(user)
                             } else {
                                 toast("Failed")
-//                                updateUI(null)
                             }
                         }
             }
-
-            btn_google -> {
-                toast("Login with google account")
-
-
-            }
         }
     }
-
 }
