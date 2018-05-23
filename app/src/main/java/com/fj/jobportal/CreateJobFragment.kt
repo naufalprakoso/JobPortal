@@ -17,7 +17,7 @@ import org.jetbrains.anko.toast
 class CreateJobFragment : Fragment(), View.OnClickListener {
 
     var database = FirebaseDatabase.getInstance()
-    var myRef = database.getReference("company")
+    var myRef = database.getReference()
 
     override fun onClick(v: View?) {
         when(v){
@@ -31,17 +31,17 @@ class CreateJobFragment : Fragment(), View.OnClickListener {
                 var desc = edt_jobdesc.text.toString()
                 var experience = edt_min_experience.text.toString()
 
-                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                myRef.child("company").child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
                         .child("companyName").setValue(name)
-                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                myRef.child("company").child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
                         .child("jobPosition").setValue(position)
-                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                myRef.child("company").child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
                         .child("salary").setValue(salary)
-                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                myRef.child("company").child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
                         .child("jobType").setValue(type)
-                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                myRef.child("company").child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
                         .child("jobDesc").setValue(desc)
-                myRef.child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
+                myRef.child("company").child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
                         .child("jobExperience").setValue(experience)
 
                 context?.toast("Insert succesful")

@@ -3,7 +3,6 @@ package com.fj.jobportal
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +12,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class MainFragment : Fragment(), View.OnClickListener {
 
     lateinit var databaseReference : DatabaseReference
-    lateinit var jobs : ArrayList<Job>
 
     override fun onClick(v: View?) {
         when(v){
@@ -55,22 +54,26 @@ class MainFragment : Fragment(), View.OnClickListener {
 
         view.btn_verify.setOnClickListener(this)
 
+        databaseReference = FirebaseDatabase.getInstance().reference
+        val jobs = java.util.ArrayList<Job>()
+
         view.rv_data.setHasFixedSize(true)
         view.rv_data.layoutManager = GridLayoutManager(context, 2)
 
-        databaseReference = FirebaseDatabase.getInstance().reference
-        jobs = ArrayList<Job>()
-
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (dataSnapshot in snapshot.child(user?.uid).children) {
-                    val job : Job? = dataSnapshot.getValue<Job>(Job::class.java)
-                    jobs.add(job!!)
-
-                    context?.toast("Hello")
+                for (dataSnapshot in snapshot.child("company").child(user?.uid).children) {
+                    val vacancy = dataSnapshot.getValue<Job>(Job::class.java)
+                    vacancy?.let { jobs.add(it) }
                 }
 
-                view.rv_data.adapter = JobAdapter(context, jobs)
+                view.rv_data.adapter = JobAdapter(context, jobs){
+                    context?.startActivity<JobDetailActivity>(
+                            "name" to "${it.companyName}",
+                            "type" to it.jobType,
+                            "desc" to "${it.jobDesc}"
+                    )
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
