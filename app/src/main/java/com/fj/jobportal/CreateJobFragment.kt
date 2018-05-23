@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_create_job.*
 import com.google.firebase.database.FirebaseDatabase
@@ -18,6 +19,7 @@ class CreateJobFragment : Fragment(), View.OnClickListener {
 
     var database = FirebaseDatabase.getInstance()
     var myRef = database.getReference()
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onClick(v: View?) {
         when(v){
@@ -43,6 +45,16 @@ class CreateJobFragment : Fragment(), View.OnClickListener {
                         .child("jobDesc").setValue(desc)
                 myRef.child("company").child(uid).child("vacancy" + position.get(0) + salary.get(0) + name.get(0))
                         .child("jobExperience").setValue(experience)
+
+                firebaseAnalytics = FirebaseAnalytics.getInstance(context)
+                var bundle: Bundle = Bundle()
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, edt_position.text.toString())
+                firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+                firebaseAnalytics.setAnalyticsCollectionEnabled(true)
+                firebaseAnalytics.setMinimumSessionDuration(20000)
+                firebaseAnalytics.setSessionTimeoutDuration(500)
+                firebaseAnalytics.setUserId(edt_name.text.toString())
+                firebaseAnalytics.setUserProperty("Position", edt_position.text.toString())
 
                 context?.toast("Insert succesful")
 
