@@ -47,7 +47,7 @@ class CreateJobFragment : Fragment(), View.OnClickListener {
                         .child("jobExperience").setValue(experience)
 
                 firebaseAnalytics = FirebaseAnalytics.getInstance(context)
-                var bundle: Bundle = Bundle()
+                var bundle  = Bundle()
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, edt_position.text.toString())
                 firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
                 firebaseAnalytics.setAnalyticsCollectionEnabled(true)
@@ -75,7 +75,7 @@ class CreateJobFragment : Fragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.fragment_create_job, container, false)
+        val view = inflater.inflate(R.layout.fragment_create_job, container, false)
 
         val adapterType = ArrayAdapter.createFromResource(
                 context,
