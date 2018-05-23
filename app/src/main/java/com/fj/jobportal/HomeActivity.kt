@@ -25,13 +25,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
 
-        var mainFragment = MainFragment()
+        val mainFragment = MainFragment()
         supportFragmentManager.inTransaction {
             replace(R.id.container_frame, mainFragment)
         }
 
         fab.setOnClickListener { view ->
-            var createJobFragment = CreateJobFragment()
+            val createJobFragment = CreateJobFragment()
             supportFragmentManager.inTransaction {
                 replace(R.id.container_frame, createJobFragment)
             }
@@ -92,7 +92,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_home -> {
-
+                val mainFragment = MainFragment()
+                supportFragmentManager.inTransaction {
+                    replace(R.id.container_frame, mainFragment)
+                }
             }
             R.id.nav_help -> {
 
